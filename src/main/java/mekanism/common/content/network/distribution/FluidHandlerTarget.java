@@ -31,6 +31,6 @@ public class FluidHandlerTarget extends Target<IFluidHandler, Integer, @NotNull 
 
     @Override
     protected Integer simulate(IFluidHandler handler, @NotNull FluidStack fluidStack) {
-        return handler.fill(fluidStack, FluidAction.SIMULATE);
+        return handler.fill(fluidStack.copy(), FluidAction.SIMULATE);
     }
 }
