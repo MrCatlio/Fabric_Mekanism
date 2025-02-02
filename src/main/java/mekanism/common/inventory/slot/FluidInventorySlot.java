@@ -59,7 +59,7 @@ public class FluidInventorySlot extends BasicInventorySlot implements IFluidHand
                     //we return if there is at least one empty tank in the item so that we can then drain into it
                     return hasEmpty;
                 }
-                return fluidHandlerItem.fill(fluidTank.getFluid(), FluidAction.SIMULATE) > 0;
+                return fluidHandlerItem.fill(fluidTank.getFluid().copy(), FluidAction.SIMULATE) > 0;
             }
             return false;
         };
@@ -161,7 +161,7 @@ public class FluidInventorySlot extends BasicInventorySlot implements IFluidHand
                 }
                 IFluidHandlerItem itemFluidHandler = cap.orElseThrow(MekanismUtils.MISSING_CAP_ERROR);
                 //True if the tanks contents are valid, and we can fill the item with any of the contents
-                return itemFluidHandler.fill(fluidInTank, FluidAction.SIMULATE) > 0;
+                return itemFluidHandler.fill(fluidInTank.copy(), FluidAction.SIMULATE) > 0;
             }
             return false;
         }, stack -> isNonFullFluidContainer(FluidUtil.getFluidHandler(stack)), listener, x, y);

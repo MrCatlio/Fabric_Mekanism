@@ -91,7 +91,14 @@ public class TransmitterNetworkRegistry {
     }
 
     public static void invalidateTransmitter(Transmitter<?, ?, ?> transmitter) {
-        getInstance().invalidTransmitters.add(transmitter);
+        TransmitterNetworkRegistry registry = getInstance();
+        registry.invalidTransmitters.add(transmitter);
+        Coord4D coord = transmitter.getTileCoord();
+        Transmitter<?, ?, ?> removed = registry.newOrphanTransmitters.remove(coord);
+        if (removed != null && removed != transmitter) {
+            Mekanism.logger.error("Different orphan transmitter was registered at location during removal! {}", coord);
+            registry.newOrphanTransmitters.put(coord, transmitter);//put it back?
+        }
     }
 
     public static void registerOrphanTransmitter(Transmitter<?, ?, ?> transmitter) {
@@ -101,7 +108,7 @@ public class TransmitterNetworkRegistry {
             // was in.
             Coord4D coord = transmitter.getTileCoord();
             Transmitter<?, ?, ?> previous = getInstance().newOrphanTransmitters.put(coord, transmitter);
-            if (previous != null && previous != transmitter) {
+            if (previous != null && previous != transmitter && previous.isValid()) {
                 Mekanism.logger.error("Different orphan transmitter was already registered at location! {}", coord);
             }
         }

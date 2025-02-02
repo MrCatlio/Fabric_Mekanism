@@ -67,7 +67,7 @@ public class GuiModuleScreen extends GuiScrollableElement {
                     EnumToggle<?> toggle = createEnumToggle(configItem, 2, startY, i);
                     element = toggle;
                     // allow the dragger to continue sliding, even when we reset the config element
-                    if (currentModule != null && currentModule.getData() == module.getData() && miniElements.get(i) instanceof EnumToggle<?> enumToggle) {
+                    if (currentModule != null && currentModule.getData() == module.getData() && i < miniElements.size() && miniElements.get(i) instanceof EnumToggle<?> enumToggle) {
                         toggle.dragging = enumToggle.dragging;
                     }
                 } else if (configItem.getData() instanceof ModuleColorData data) {

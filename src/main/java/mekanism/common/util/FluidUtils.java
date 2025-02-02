@@ -111,7 +111,7 @@ public final class FluidUtils {
     }
 
     public static boolean canFill(IFluidHandler handler, @NotNull FluidStack stack) {
-        return handler.fill(stack, FluidAction.SIMULATE) > 0;
+        return handler.fill(stack.copy(), FluidAction.SIMULATE) > 0;
     }
 
     public static boolean handleTankInteraction(Player player, InteractionHand hand, ItemStack itemStack, IExtendedFluidTank fluidTank) {
@@ -131,7 +131,7 @@ public final class FluidUtils {
             }
             if (fluidInItem.isEmpty()) {
                 if (!fluidTank.isEmpty()) {
-                    int filled = handler.fill(fluidTank.getFluid(), player.isCreative() ? FluidAction.SIMULATE : FluidAction.EXECUTE);
+                    int filled = handler.fill(fluidTank.getFluid().copy(), player.isCreative() ? FluidAction.SIMULATE : FluidAction.EXECUTE);
                     ItemStack container = handler.getContainer();
                     if (filled > 0) {
                         if (itemStack.getCount() == 1) {
